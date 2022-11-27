@@ -1,4 +1,17 @@
 const inputs = document.querySelectorAll(".otp-input");
+const validInputValues = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "Backspace",
+];
 
 const moveFocusToPreviousInput = (eventOriginationIndex) => {
   if (eventOriginationIndex === 0) {
@@ -19,6 +32,10 @@ const moveFocusToNextInput = (eventOriginationIndex) => {
 };
 
 const onInputChange = (event) => {
+  if (!validInputValues.includes(event.key)) {
+    return;
+  }
+
   const input = event.target;
   const index = parseInt(input.getAttribute("data-index"));
 
@@ -32,4 +49,12 @@ const onInputChange = (event) => {
 
 inputs.forEach((input) => {
   input.addEventListener("keyup", onInputChange);
+});
+
+inputs.forEach((input) => {
+  input.addEventListener("keydown", (event) => {
+    if (!validInputValues.includes(event.key)) {
+      event.preventDefault();
+    }
+  });
 });
